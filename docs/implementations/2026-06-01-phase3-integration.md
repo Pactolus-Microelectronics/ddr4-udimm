@@ -180,3 +180,16 @@ connectivity rides on global labels by design. Adding sheet-pins would be cosmet
 
 - `PHASE3_INTEGRATION_BRIEF.md` (authoritative spec, untracked working doc).
 - `docs/implementations/2026-06-01-phase2-edge-symbol.md` (the J1 symbol + placement).
+
+## Correction (2026-11-17)
+
+The What Changed table above lists `build/p3/erc_*.json` as added, as per-step evidence. When this record was merged, only `erc_baseline.json` and `erc_final.json` were committed. The per-step files stayed untracked on the machine that ran the work, and were recovered and committed on 2026-11-17 ([implementation record](2026-11-17-recover-phase-evidence.md)). Each file's own `date` field shows it was generated on 2026-06-01.
+
+| Step | File |
+|---|---|
+| 0 | `erc_baseline.json` (already tracked; byte-identical to the recovered `erc_step00_baseline.json`, which was therefore not added) |
+| 1 to 8 | `erc_step01_alert_nc.json` to `erc_step08_vref_merge.json` |
+| 9 | `erc_final.json` (already tracked; identical apart from `date` to the recovered `erc_step09_rm_jpwr_block.json`, which was therefore not added) |
+| 9, intermediate | `erc_step09_rm_jpwr.json`: 89 violations, generated at 19:16, two minutes before the step 9 result. The table above does not list it. |
+
+On 2026-11-17 each step was re-run with KiCad 9.0.8 at the commit the table names. Every step reproduced the count in the table. Steps 0 to 7 and 9 matched the recovered file in every field except `date`. At step 8, one `same_local_global_label` violation is reported against a different one of the eight equivalent `VREF` global labels; the count and the violations per sheet are the same.

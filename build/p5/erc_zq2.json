@@ -1,0 +1,116 @@
+{
+    "$schema": "https://schemas.kicad.org/erc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-06-01T23:49:20+0300",
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "9.0.8",
+    "sheets": [
+        {
+            "path": "/",
+            "uuid_path": "/464309c0-e3ad-4428-a43f-e1cf3b7a7d42",
+            "violations": []
+        },
+        {
+            "path": "/address-command-clock/",
+            "uuid_path": "/464309c0-e3ad-4428-a43f-e1cf3b7a7d42/0608c925-7d0a-486c-adfa-f9e150a950d8",
+            "violations": [
+                {
+                    "description": "Input Power pin not driven by any Output Power pins",
+                    "items": [
+                        {
+                            "description": "Symbol U_DRAM0 Pin B2 [VDDQ, Power input, Line]",
+                            "pos": {
+                                "x": 0.6223,
+                                "y": 0.5588
+                            },
+                            "uuid": "e004a7e8-f483-4f81-bfca-156a0d28e052"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "power_pin_not_driven"
+                },
+                {
+                    "description": "Input Power pin not driven by any Output Power pins",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR03 Pin 1 [Power input, Line]",
+                            "pos": {
+                                "x": 0.6731,
+                                "y": 0.5588
+                            },
+                            "uuid": "7609cb26-0ddb-447b-b214-73dad484eadb"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "power_pin_not_driven"
+                },
+                {
+                    "description": "Input Power pin not driven by any Output Power pins",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR01 Pin 1 [Power input, Line]",
+                            "pos": {
+                                "x": 1.3081,
+                                "y": 0.5588
+                            },
+                            "uuid": "6fcddeff-a6b1-404c-ad09-9144155ec69b"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "power_pin_not_driven"
+                },
+                {
+                    "description": "Input Power pin not driven by any Output Power pins",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR07 Pin 1 [Power input, Line]",
+                            "pos": {
+                                "x": 0.6223,
+                                "y": 1.5367
+                            },
+                            "uuid": "c9aa2f06-192e-46cb-bd5d-1f59a62db2a1"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "power_pin_not_driven"
+                }
+            ]
+        },
+        {
+            "path": "/data-byte-lanes-dqs/",
+            "uuid_path": "/464309c0-e3ad-4428-a43f-e1cf3b7a7d42/a876beee-cefa-449d-aa5c-f6d2865bd67f",
+            "violations": []
+        },
+        {
+            "path": "/spd-and-configuration/",
+            "uuid_path": "/464309c0-e3ad-4428-a43f-e1cf3b7a7d42/32845847-1fe2-4b3a-b24a-3fdd7e5b4214",
+            "violations": [
+                {
+                    "description": "Input Power pin not driven by any Output Power pins",
+                    "items": [
+                        {
+                            "description": "Symbol U_SPD0 Pin 8 [VCC, Power input, Line]",
+                            "pos": {
+                                "x": 1.6891,
+                                "y": 0.889
+                            },
+                            "uuid": "3df7cbb9-649b-4c3b-827b-5c5fa81898dc"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "power_pin_not_driven"
+                }
+            ]
+        },
+        {
+            "path": "/udimm-edge-interface/",
+            "uuid_path": "/464309c0-e3ad-4428-a43f-e1cf3b7a7d42/9986c6c0-2ac4-474e-a00a-d8203c8bf46f",
+            "violations": []
+        }
+    ],
+    "source": "omi_v1_power.kicad_sch"
+}
