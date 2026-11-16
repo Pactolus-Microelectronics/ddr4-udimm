@@ -1,7 +1,7 @@
 (export (version "E")
   (design
-    (source "C:\\Users\\senso\\OneDrive\\Masaüstü\\CVWebpage\\omi-project\\design\\power\\omi_v1_power\\omi_v1_power.kicad_sch")
-    (date "2026-06-02T17:42:21+0300")
+    (source "${KIPRJMOD}\\omi_v1_power.kicad_sch")
+    (date "2026-11-17T00:47:42+0300")
     (tool "Eeschema 9.0.8")
     (sheet (number "1") (name "/") (tstamps "/")
       (title_block
@@ -796,13 +796,13 @@
         (pin (num "288") (name "VPP") (type "passive")))))
   (libraries
     (library (logical "Device")
-      (uri "C:\\Users\\senso\\AppData\\Local\\Programs\\KiCad\\9.0\\share\\kicad\\symbols\\/Device.kicad_sym"))
+      (uri "${KICAD9_SYMBOL_DIR}\\/Device.kicad_sym"))
     (library (logical "Memory_EEPROM")
-      (uri "C:\\Users\\senso\\AppData\\Local\\Programs\\KiCad\\9.0\\share\\kicad\\symbols\\/Memory_EEPROM.kicad_sym"))
+      (uri "${KICAD9_SYMBOL_DIR}\\/Memory_EEPROM.kicad_sym"))
     (library (logical "Memory_RAM")
-      (uri "C:\\Users\\senso\\AppData\\Local\\Programs\\KiCad\\9.0\\share\\kicad\\symbols\\/Memory_RAM.kicad_sym"))
+      (uri "${KICAD9_SYMBOL_DIR}\\/Memory_RAM.kicad_sym"))
     (library (logical "omi")
-      (uri "C:\\Users\\senso\\OneDrive\\Masaüstü\\CVWebpage\\omi-project\\design\\power\\omi_v1_power/omi.kicad_sym")))
+      (uri "${KIPRJMOD}/omi.kicad_sym")))
   (nets
     (net (code "1") (name "A0") (class "Default")
       (node (ref "J1") (pin "79") (pinfunction "A0") (pintype "passive"))
