@@ -113,3 +113,9 @@ Untouched: `omi.kicad_sym` + `tools/edge_symbol/**` (frozen), the CSV, `validati
 - `PHASE4_FOOTPRINTS_BRIEF.md` (authoritative spec, untracked working doc).
 - `docs/implementations/2026-06-01-phase3-integration.md` (J1 integration).
 - `docs/implementations/2026-06-01-phase2-edge-symbol.md` (the J1 symbol; the generator pattern this footprint generator mirrors).
+
+## Correction (2026-11-17)
+
+The What Changed table above lists a "pad-match report" among the `build/p4/*` evidence. No such file was ever saved, committed or not. The pad-match result itself is the one stated in this record: footprint pads {1..288} equal symbol pins {1..288}, from `gen_edge_footprint.py --verify`. The committed `build/p4/` evidence is the SVG render, the netlist and two ERC reports.
+
+Re-run on 2026-11-17 at commit `89c3d42`: `python tools/edge_footprint/gen_edge_footprint.py --verify` printed `VERIFY OK: 288 pads, numbers 1..288 == CSV pins, faces 144 F.Cu / 144 B.Cu`. The footprint it regenerates first was identical to the committed file apart from line endings. See the [implementation record](2026-11-17-recover-phase-evidence.md).
