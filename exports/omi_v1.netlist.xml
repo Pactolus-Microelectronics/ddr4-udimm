@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <export version="E">
   <design>
-    <source>C:\Users\senso\OneDrive\Masaüstü\CVWebpage\omi-project\design\power\omi_v1_power\omi_v1_power.kicad_sch</source>
-    <date>2026-06-02T17:42:20+0300</date>
+    <source>${KIPRJMOD}\omi_v1_power.kicad_sch</source>
+    <date>2026-11-17T00:47:41+0300</date>
     <tool>Eeschema 9.0.8</tool>
     <sheet number="1" name="/" tstamps="/">
       <title_block>
@@ -861,16 +861,16 @@
   </libparts>
   <libraries>
     <library logical="Device">
-      <uri>C:\Users\senso\AppData\Local\Programs\KiCad\9.0\share\kicad\symbols\/Device.kicad_sym</uri>
+      <uri>${KICAD9_SYMBOL_DIR}\/Device.kicad_sym</uri>
     </library>
     <library logical="Memory_EEPROM">
-      <uri>C:\Users\senso\AppData\Local\Programs\KiCad\9.0\share\kicad\symbols\/Memory_EEPROM.kicad_sym</uri>
+      <uri>${KICAD9_SYMBOL_DIR}\/Memory_EEPROM.kicad_sym</uri>
     </library>
     <library logical="Memory_RAM">
-      <uri>C:\Users\senso\AppData\Local\Programs\KiCad\9.0\share\kicad\symbols\/Memory_RAM.kicad_sym</uri>
+      <uri>${KICAD9_SYMBOL_DIR}\/Memory_RAM.kicad_sym</uri>
     </library>
     <library logical="omi">
-      <uri>C:\Users\senso\OneDrive\Masaüstü\CVWebpage\omi-project\design\power\omi_v1_power/omi.kicad_sym</uri>
+      <uri>${KIPRJMOD}/omi.kicad_sym</uri>
     </library>
   </libraries>
   <nets>

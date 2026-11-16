@@ -24,6 +24,16 @@ ERC runs **first**. If the schematic has **any** ERC violation, the script print
 **exits non-zero without producing any export** — exports only ever come from a verified-clean
 design. A fully clean run exits `0`.
 
+## No local paths
+
+`kicad-cli` writes two directories into both netlists as absolute paths (the schematic `source`
+and the library `uri` entries), which would publish the exporting machine's user and folder
+names: the project directory, and KiCad's own symbol library directory (which sits under the
+user profile for a per-user install). The script rewrites them to KiCad's own variables,
+`${KIPRJMOD}` (as the library tables already write it) and `${KICAD9_SYMBOL_DIR}`. It then refuses to finish (non-zero exit, no manifest) if
+`erc.json`, either netlist or the BOM still contains the repository path or the user-profile path.
+The PDF is not checked, because its text is compressed.
+
 ## Requirements
 
 - **KiCad 9.0** `kicad-cli` (file format `20250114`) — **not** 10.x, which the script rejects.

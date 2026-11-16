@@ -162,6 +162,29 @@ if ($LASTEXITCODE -ne 0 -or -not (Test-Path $netXml)) { Fail "netlist (kicadxml)
 & $bin sch export netlist --format kicadsexpr -o $netSexpr $sch | Out-Null
 if ($LASTEXITCODE -ne 0 -or -not (Test-Path $netSexpr)) { Fail "netlist (kicadsexpr) export failed." }
 
+# Local-path hygiene: kicad-cli expands two directories to absolute paths in the netlist
+# <source> and library <uri> entries, which would publish the exporting machine's user and
+# folder names:
+#   - the project directory, which the library tables write as ${KIPRJMOD};
+#   - KiCad's own symbol library directory (under the user profile for a per-user install),
+#     which KiCad 9 names ${KICAD9_SYMBOL_DIR}.
+# Rewrite each back to its KiCad variable. Literal string replacement only: the .net format
+# escapes each backslash as two, the XML does not. Files are read and written as UTF-8
+# without a BOM, so line endings and every other byte are preserved.
+$projDir = (Resolve-Path (Split-Path $sch -Parent)).Path
+$kicadSymDir = Join-Path (Split-Path (Split-Path $bin -Parent) -Parent) "share\kicad\symbols"
+$pathVars = @(@($projDir, '${KIPRJMOD}'), @($kicadSymDir, '${KICAD9_SYMBOL_DIR}'))
+$utf8 = New-Object System.Text.UTF8Encoding($false)
+foreach ($file in @(@($netXml, $false), @($netSexpr, $true))) {
+    $text = [System.IO.File]::ReadAllText($file[0], $utf8)
+    foreach ($pv in $pathVars) {
+        $needle = $pv[0]
+        if ($file[1]) { $needle = $needle.Replace('\', '\\') }
+        $text = $text.Replace($needle, $pv[1])
+    }
+    [System.IO.File]::WriteAllText($file[0], $text, $utf8)
+}
+
 # --- [3/5] BOM (CSV, grouped) ------------------------------------------------------
 Write-Host "[3/5] BOM (CSV) ..."
 $bomFields = 'Reference,Value,Footprint,${QUANTITY},${DNP},Manufacturer,MPN'
@@ -184,6 +207,24 @@ Write-Utf8NoBom $bomCsv ($csvText + "`r`n")
 Write-Host "[4/5] Schematic PDF (all sheets) ..."
 & $bin sch export pdf -o $pdf $sch | Out-Null
 if ($LASTEXITCODE -ne 0 -or -not (Test-Path $pdf)) { Fail "schematic PDF export failed." }
+
+# --- Local-path gate: no text artifact may name the exporting machine's folders -----
+# Checks the repository root and the user profile, each in plain and in doubled-backslash
+# form. The PDF is not checked: its text streams are compressed, so a byte search would
+# prove nothing either way.
+$leakNeedles = New-Object System.Collections.Generic.List[string]
+foreach ($p in @($repoRoot, $env:USERPROFILE)) {
+    if ($p) { $leakNeedles.Add($p); $leakNeedles.Add($p.Replace('\', '\\')) }
+}
+foreach ($a in @($ercJson, $netXml, $netSexpr, $bomCsv)) {
+    $text = [System.IO.File]::ReadAllText($a, (New-Object System.Text.UTF8Encoding($false)))
+    foreach ($n in $leakNeedles) {
+        if ($text.IndexOf($n, [System.StringComparison]::OrdinalIgnoreCase) -ge 0) {
+            Fail "LOCAL-PATH GATE FAILED: $(Split-Path $a -Leaf) contains a local path ('$n')."
+        }
+    }
+}
+Write-Host "      Local-path gate: no repository or user-profile path in the text artifacts." -ForegroundColor Green
 
 # --- [5/5] Provenance manifest (HONEST: provenance, not validation) ----------------
 Write-Host "[5/5] Provenance manifest ..."
@@ -227,6 +268,7 @@ $lines += "Git branch      : $gitBranch"
 $lines += "Source schematic: $schRel"
 $lines += "kicad-cli       : $ver"
 $lines += "ERC result      : 0 violations (clean) - gate passed, exports produced."
+$lines += "Local paths     : written as `${KIPRJMOD} and `${KICAD9_SYMBOL_DIR} in both netlists; gate passed."
 $lines += ""
 $lines += "Artifacts (SHA-256):"
 $lines += $hashLines
