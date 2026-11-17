@@ -33,9 +33,9 @@ OMI exists to close this gap by providing:
 
 ## Project Status
 
-OMI v1 is a **reviewable DDR4 UDIMM reference design**: 8 GB, single rank (1R), x8 DRAM devices, non-ECC (64-bit bus). **The schematic stage is complete.**
+OMI v1 is a **reviewable DDR4 UDIMM reference design**: 8 GB, single rank (1R), x8 DRAM devices, non-ECC (64-bit bus). **It is an ERC-clean connectivity schematic. Decoupling, termination and the SPD device are open items, and there is no layout and no board.**
 
-### ✅ Schematic capture — complete, ERC-clean, and netlisted
+### Schematic capture: connectivity captured, ERC-clean, netlisted
 
 The OMI v1 schematic is captured in KiCad and **passes Electrical Rule Check with 0 violations — no exclusions, no waivers**:
 
@@ -43,6 +43,14 @@ The OMI v1 schematic is captured in KiCad and **passes Electrical Rule Check wit
 - **18 / 18 real components footprinted**: `J1` (288-pad card edge), 8× DDR4 SDRAM (FBGA-78), one SPD EEPROM (UDFN-8), and 8× ZQ calibration resistors (R1–R8, 240 Ω).
 - ERC reaches 0 through **real connections** — datasheet-genuine no-connect flags on truly-NC balls, VSS ties on `TEN`/`PAR`, the eight mandatory ZQ resistors, and `PWR_FLAG`s on host-supplied rails — **not** through exclusions or waivers.
 - A **generated netlist** (KiCad XML + s-expression), **BOM** (CSV), and **5-page schematic PDF** are checked in under [`exports/`](./exports/), produced by an export step **gated on the clean ERC**.
+
+**Open items in the schematic.** Passing ERC shows that the connections are consistent. It does not show that the design is finished. The [BOM](./exports/omi_v1.bom.csv) lists every placed part, and three things a working module needs are not among them:
+
+- **Decoupling:** no capacitors are placed on any rail.
+- **Termination:** no termination resistors are placed on the command, address and clock nets.
+- **The SPD device:** `U_SPD0` uses a generic 1 Kbit (128 × 8) EEPROM symbol (`AT24CS01`, per its library description), with no part number chosen. No SPD contents exist yet (Stage 9). A DDR4 SPD device has not been selected.
+
+*Correction (2026-11-17):* earlier versions of this page, and the v1.1.0 release notes, called the schematic stage "complete". It is complete as a connectivity schematic that passes its rule check, not as a finished design.
 
 **Evidence (reproducible):** [`exports/`](./exports/) holds the netlist, BOM, PDF, and `erc.json` (0 violations); [`exports/MANIFEST.txt`](./exports/MANIFEST.txt) records the source commit, `kicad-cli` version, and a SHA-256 for every artifact. The KiCad source is at [`design/power/omi_v1_power/`](./design/power/omi_v1_power/). The step-by-step engineering record is in [`docs/implementations/`](./docs/implementations/).
 
@@ -58,24 +66,24 @@ OMI v1 is a **schematic-stage** study. At this stage, "validation" means three r
 
 ### Scope boundary — what is *not* here (the wall)
 
-OMI v1 stops at a complete, ERC-clean schematic. The following are **out of scope and do not exist** in this repository:
+OMI v1 currently stops at an ERC-clean connectivity schematic with the open items above. The following do **not exist** in this repository yet:
 
 - **PCB layout, Gerbers, and stack-up** — none produced.
 - **Signal-integrity / power-integrity (SI/PI) simulation** — none performed.
 - **A fabricated or bench-tested board** — none built; no measurements taken.
 
-Two caveats **scope** (they do not negate) the completed schematic:
+Two further caveats apply to the schematic:
 
 - **`J1` models the 288 numbered pads only.** Exact JEDEC notch position, card-edge outline, and pad-mechanical geometry are a layout/mechanical concern and are **unproven** here.
 - **Label-on-pin connectivity.** Global net labels are anchored directly on `J1` pins. This is ERC-clean and correct, but it is a known KiCad structural quirk (it prevented directional pin retyping) and is flagged for future cleanup.
 
 ### How the schematic was reached — documentation stages
 
-The completed schematic above was produced through OMI's staged, documentation-first method:
+The schematic above was produced through OMI's staged, documentation-first method:
 
 - **Stage 5 — Architecture Decisions** — OMI v1 direction locked (DDR4 UDIMM baseline).
 - **Stage 6 — Block Decomposition** — power, CA/CLK, DQ/DQS, SPD, and mechanical blocks documented.
-- **Stage 7 — Schematic Capture — complete** — design intent (7.1 power/PDN, 7.2 CA/CLK, 7.3 DQ/DQS byte-lanes, 7.4 SPD, 7.5 288/288 edge pin map, 7.6 interface summary, 7.7 closure) **realized** as the ERC-clean, footprint-complete, netlisted KiCad design described above.
+- **Stage 7 — Schematic Capture — connectivity captured, ERC-clean; open items above** — design intent (7.1 power/PDN, 7.2 CA/CLK, 7.3 DQ/DQS byte-lanes, 7.4 SPD, 7.5 288/288 edge pin map, 7.6 interface summary, 7.7 closure) **realized** as the ERC-clean, footprint-complete, netlisted KiCad design described above.
 - **Stage 8 — Validation & Bring-Up Strategy — documentation complete** — the L0–L4 ladder, platform strategy, bring-up procedure, test-point/DFT plan, failure-mode catalog, and review checklists are written. **L0 and ERC are satisfied today; physical L1–L4 execution awaits a fabricated board.**
 
 ### Beyond the wall — not started
@@ -98,14 +106,14 @@ docs/05_power_delivery_and_pdn/       ← Power delivery & PDN assumptions
 docs/06_signal_topology_and_routing/  ← Signal topology: CA/CLK, DQ/DQS, routing philosophy
 docs/07_schematic_capture/            ← Stage 7: schematic-level intent and design rationale
 docs/08_validation_and_review/        ← Stage 8: validation framework, procedures, checklists
-docs/implementations/                 ← Phase-by-phase record of how the schematic was completed
+docs/implementations/                 ← Phase-by-phase record of how the schematic was built
 docs/v1/                              ← OMI v1 decision docs (form factor, capacity, etc.)
 design/connector/                     ← 288-pin UDIMM edge connector CSV pin map
 validation/evidence/                  ← L0 artifact-integrity evidence (real) + L1 framework dry-run (not measurements)
 validation/runs/                      ← Bench run logs (empty until a board is fabricated)
 ```
 
-If you're new: start with the engineering method doc below, then skim the Stage 5–6 design docs, then read the completed schematic and its evidence in [`exports/`](./exports/).
+If you're new: start with the engineering method doc below, then skim the Stage 5–6 design docs, then read the schematic and its evidence in [`exports/`](./exports/).
 
 ---
 
@@ -207,7 +215,7 @@ redistribution principles defined in [CHARTER.md](CHARTER.md).
 
 - [OMI Enters Stage 8: Turning a DDR4 UDIMM Schematic into Verifiable Hardware](https://medium.com/@mefe.sensoy/omi-enters-stage-8-turning-a-ddr4-udimm-schematic-into-verifiable-hardware-c6d252b0e1d3)
 
-  *Scope note:* this essay frames the project's **direction**. What this repository contains **today** is a complete, ERC-clean DDR4 UDIMM **schematic** with a generated netlist, BOM, and PDF — **not** fabricated or bench-verified hardware. Turning the schematic into *verifiable hardware* (layout, fabrication, bring-up) remains future work, beyond the current scope (see **Project Status → Scope boundary**, above).
+  *Scope note:* this essay frames the project's **direction**. What this repository contains **today** is an ERC-clean DDR4 UDIMM **connectivity schematic**, with open items (decoupling, termination, the SPD device) and a generated netlist, BOM, and PDF — **not** fabricated or bench-verified hardware. Turning the schematic into *verifiable hardware* (layout, fabrication, bring-up) remains future work, beyond the current scope (see **Project Status → Scope boundary**, above).
 
 ---
 

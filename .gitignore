@@ -3,3 +3,6 @@
 PHASE*_BRIEF.md
 *_PROPOSAL.md
 AUDIT_*.md
+
+# KiCad automatic project backups. Nothing references them, and git keeps the design history.
+*-backups/
