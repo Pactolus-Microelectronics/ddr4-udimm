@@ -3,7 +3,7 @@
 
 Welcome to the Open Memory Initiative.
 
-OMI is building an **open, reference-quality DDR4 UDIMM**, and the **schematic stage is now complete** — a real 288-pin edge connector, ERC-clean (0 violations), with a generated netlist, BOM, and schematic PDF. The work spans architecture decisions, schematic capture, and a documented validation strategy. Everything is public, everything is documented, and every decision has a rationale you can read. (No board has been fabricated yet — layout, fabrication, and bench bring-up remain future work.)
+OMI is building an **open, reference-quality DDR4 UDIMM**. Today it is an **ERC-clean connectivity schematic** — a real 288-pin edge connector, 0 ERC violations, with a generated netlist, BOM, and schematic PDF. Decoupling, termination and the SPD device are still open items (see the README's Project Status). The work spans architecture decisions, schematic capture, and a documented validation strategy. Everything is public, everything is documented, and every decision has a rationale you can read. (No board has been fabricated yet — layout, fabrication, and bench bring-up remain future work.)
 
 This guide will help you understand the project, find your way around the repository, and start contributing.
 
@@ -30,7 +30,7 @@ OMI follows a **staged engineering methodology**. Each stage builds on the previ
 |:---:|:---|:---|
 | 5 | Architecture Decisions | ✅ Locked |
 | 6 | Block Decomposition | ✅ Core blocks documented |
-| 7 | Schematic Capture | ✅ **Complete** — real 288-pin `J1`, ERC-clean (0), 18/18 footprinted, netlist/BOM/PDF in `exports/` |
+| 7 | Schematic Capture | Connectivity captured — real 288-pin `J1`, ERC-clean (0), 18/18 footprinted, netlist/BOM/PDF in `exports/`. **Open:** decoupling, termination, the SPD device |
 | 8 | Validation & Review | ✅ Strategy documented; L0 + ERC satisfied — physical L1–L4 await a fabricated board |
 | 9 | Minimal Reference Schematic | ⏳ Not started (beyond the wall) |
 | 10 | Layout & SI/PI Guidelines | ⏳ Not started (beyond the wall) |
@@ -74,7 +74,7 @@ omi/
 │   │   └── stage-7-7-stage-7-closure.md
 │   │
 │   ├── 08_validation_and_review/       ← Stage 8: validation framework & checklists
-│   ├── implementations/                ← Phase-by-phase record of the completed schematic
+│   ├── implementations/                ← Phase-by-phase record of how the schematic was built
 │   └── v1/                             ← OMI v1 decision docs (form factor, capacity, etc.)
 │
 └── validation/
@@ -92,7 +92,7 @@ If you're new, follow this path:
 2. **[CHARTER.md](./CHARTER.md)** — understand the project's scope, principles, and governance
 3. **[Power delivery & PDN](./docs/05_power_delivery_and_pdn/)** — rails, sourcing, and PDN assumptions
 4. **[Signal topology & routing](./docs/06_signal_topology_and_routing/)** — CA/CLK, DQ/DQS, and routing philosophy
-5. **[Stage 7 schematics](./docs/07_schematic_capture/)** — schematic-level design rationale; the completed KiCad design itself lives in [`design/power/omi_v1_power/`](./design/power/omi_v1_power/), with generated outputs in [`exports/`](./exports/)
+5. **[Stage 7 schematics](./docs/07_schematic_capture/)** — schematic-level design rationale; the KiCad design itself lives in [`design/power/omi_v1_power/`](./design/power/omi_v1_power/), with generated outputs in [`exports/`](./exports/)
 
 You do not need to read everything before contributing. But you should understand the stage your work touches.
 

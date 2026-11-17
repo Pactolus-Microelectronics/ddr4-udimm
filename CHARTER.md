@@ -372,10 +372,11 @@ At the end of 12 months, OMI has been successful if the following criteria are r
 * The validation and test results are publicly available. We present results both of successful operation and of identified limitations.  
 * At least one independent contributor beyond the original authorship has reproduced part or all of the work with published materials.
 
-> **Current status (schematic milestone reached).** OMI v1 now has a complete,
-> **ERC-clean** DDR4 UDIMM schematic: a real 288-pin edge connector, full
-> footprint assignment, and generated netlist/BOM/PDF (see the repository
-> `README.md` → Project Status, and `exports/`). The remaining Minimum Viable
+> **Current status (schematic milestone reached).** OMI v1 now has an
+> **ERC-clean** DDR4 UDIMM connectivity schematic: a real 288-pin edge connector,
+> footprints for every placed part, and generated netlist/BOM/PDF (see the repository
+> `README.md` → Project Status, and `exports/`). Decoupling, termination and the
+> SPD device are still open items. The remaining Minimum Viable
 > Success criteria above — a **physically manufactured** module, **bench bring-up**,
 > and **measured results on real hardware** — are **not yet met**; they remain
 > future/aspirational work beyond the current schematic scope. This charter states
