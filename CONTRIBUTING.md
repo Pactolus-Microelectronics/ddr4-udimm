@@ -59,7 +59,7 @@ You do not need prior DDR experience to contribute. You do need to document your
 
 4. Ask clarifying questions early and in public
 
-If you are unsure where to start, look for issues labeled `good-first-issue`.
+If you are unsure where to start, look for issues labeled `good first issue`.
 
 ---
 

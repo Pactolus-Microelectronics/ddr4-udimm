@@ -186,7 +186,7 @@ When browsing issues, look for these labels:
 
 | Label | Meaning |
 |:---|:---|
-| `good-first-issue` | Easy entry point — good for first-time contributors |
+| `good first issue` | Easy entry point — good for first-time contributors |
 | `review-needed` | Needs a reviewer to check correctness, clarity, or completeness |
 | `test-needed` | Needs validation on real hardware or structured test evidence |
 | `docs` | Documentation improvement or addition |
