@@ -157,16 +157,12 @@ It destroys correctness.
 
 ## Visual Example: DDR Command Timing
 
-The following diagram illustrates how DDR commands are sequenced over time, showing ACT, READ/WRITE operations, and timing constraints between commands:
+*Correction (2026-11-17):* a diagram was meant to appear here, but its link pointed to a file on the author's computer, so it never displayed on GitHub. It has been removed. The sequence it showed:
 
-![DDR Command Timing Diagram](C:/Users/senso/.gemini/antigravity/brain/84527a44-3244-4aed-8e9b-4c34373a169f/ddr_command_timing.png)
-
-This timing diagram shows:
-
-- Multiple ACT commands activating rows in different banks
-- READ/WRITE commands accessing open rows
-- Timing intervals (tRRD, tFAW) that must be respected
-- How commands overlap across different banks
+- Several ACT commands open rows in different banks.
+- Successive ACT commands are spaced by at least [tRRD](timing_parameters.md#trrd---row-to-row-delay), and a further ACT must also respect [tFAW](timing_parameters.md#tfaw---four-activate-window).
+- READ and WRITE commands then access the open rows.
+- Commands to different banks overlap in time.
 
 ---
 

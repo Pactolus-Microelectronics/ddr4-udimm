@@ -55,3 +55,7 @@ The PDF is not covered by the gate, because its text streams are compressed. It 
 
 - [Export script usage](../../tools/export/README.md)
 - [Phase 6 record](2026-06-02-phase6-exports.md), which introduced the pipeline
+
+## Correction (2026-11-17, later)
+
+The Design Decisions above say the netlists under `build/` and `baseline/` keep their paths. That holds for `build/p2` to `build/p5`: 18 lines across four files, kept as June evidence. It does not hold for `baseline/phase1/`. Both netlists there were rewritten in [#28](https://github.com/Pactolus-Microelectronics/ddr4-udimm/pull/28) on 2026-06-01, so the user folder reads `USERNAME`; the original lines are in history at `ca4925a`. The `v1.1.0` release files `omi_v1.net` and `omi_v1.netlist.xml` also carry five path lines each. They stay as released, because the release's SHA-256 digests match the tagged `exports/` files, whose hashes `MANIFEST.txt` records. See [2026-11-17-local-path-followups.md](2026-11-17-local-path-followups.md).
